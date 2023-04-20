@@ -16,23 +16,34 @@ df_pm.drop(["Civl Structural Team","Electrical Team"],axis = 1 , inplace=True)
 
 df_pm_all = df_pm.loc[df_pm["Classification"] == "Mandatory"]
 
+# Dataframe to sum hours for PM
+pm_sum_df = pd.DataFrame 
 
 ## Create Optional Task ## 
 df_pm_op = df_pm.loc[df_pm["Classification"] == "Optional"]
 
 ## Create Side bar filter ## 
 st.sidebar.header('PM Optional Tasks')
-selected_pm = st.sidebar.selectbox('Select a optional task', ['All'] + list(df_pm_op['Artefact'].unique()))
+selected_pm = st.sidebar.selectbox('Select a optional task', ['Please Select'] + list(df_pm_op['Artefact'].unique()))
 
 ## Task Project Management ##
-st.title("Project Management")
+st.title("Delivery Schedule")
+st.subheader("Project Management")
 
 if selected_pm == "All":
     st.table(df_pm_all)
+    # pm_sum_df['Total Estimated Labour Hours'] = [df_pm_all['Est Labour Hours'].sum()]
+    # pm_sum_df['Total Timeline'] = [df_pm_all['Timeline'].sum()]
+    st.markdown(f"Total Estimated Labour Hours: **{df_pm_all['Est Labour Hours'].sum()}**")
+    st.markdown(f"Total Timeline: **{df_pm_all['Timeline'].sum()}**")
+    
 else: 
     df_concat = pd.concat([df_pm_all,df_pm.loc[df_pm["Artefact"] == selected_pm]])
     st.table(df_concat)
-
+    # pm_sum_df['Total Estimated Labour Hours'] = [df_concat['Est Labour Hours'].sum()]
+    # pm_sum_df['Total Timeline'] = [df_concat['Timeline'].sum()]
+    st.markdown(f"Total Estimated Labour Hours: **{df_concat['Est Labour Hours'].sum()}**")
+    st.markdown(f"Total Timeline: **{df_concat['Timeline'].sum()}**")
 
 
 ## Electrical ## 
