@@ -20,25 +20,25 @@ if uploaded_file is not None:
     df_pm_man = df_pm.loc[df_pm["Classification"] == "Mandatory"]
     df_pm_op = df_pm.loc[df_pm["Classification"] == "Optional"]
     
-    df_elec =
-    df_elec.drop 
-    df_elec_man = 
-    df_elec_op = 
+    # df_elec =
+    # df_elec.drop 
+    # df_elec_man = 
+    # df_elec_op = 
 
-    df_civ = 
-    df_civ.drop 
-    df_civ_man = 
-    df_civ_op = 
+    # df_civ = 
+    # df_civ.drop 
+    # df_civ_man = 
+    # df_civ_op = 
 
-    df_ec = 
-    df_ec.drop 
-    df_ec_man = 
-    df_ec_op = 
+    # df_ec = 
+    # df_ec.drop 
+    # df_ec_man = 
+    # df_ec_op = 
 
-    df_pec =
-    df_pec.drop
-    df_pec_man = 
-    df_ec_op = 
+    # df_pec =
+    # df_pec.drop
+    # df_pec_man = 
+    # df_pec_op = 
 
 
 
@@ -53,21 +53,51 @@ if uploaded_file is not None:
     ## TITLE ##
     st.title("Delivery Schedule")
 
-    ## PROJECT MANAGEMENT SECTION ##
+    ##### PROJECT MANAGEMENT SECTION #####
     st.subheader("Project Management")
 
-    if selected_pm == "All":
-        st.table(df_pm_man)
-        st.markdown(f"Total Estimated Labour Hours: **{df_pm_man['Est Labour Hours'].sum()}**")
-        st.markdown(f"Total Timeline: **{df_pm_man['Timeline'].sum()}**")
+    if selected_pm:
+        df_concat_pm = pd.concat([df_pm_man,df_pm.loc[df_pm["Artefact"] == selected_pm]])
+        st.table(df_concat_pm)
+        st.markdown(f"Total Estimated Labour Hours: **{df_concat_pm['Est Labour Hours'].sum()}**")
+        st.markdown(f"Total Timeline: **{df_concat_pm['Timeline'].sum()}**")
+
+    ##### ELECTRICAL SECTION #####
+    st.subheader("Electrical")
+
+    if selected_elec:
+        df_concat_elec = pd.concat([df_elec_man,df_elec.loc[df_elec["Artefact"] == selected_elec]])
+        st.table(df_concat_elec)
+        st.markdown(f"Total Estimated Labour Hours: **{df_elec['Est Labour Hours'].sum()}**")
+        st.markdown(f"Total Timeline: **{df_elec['Timeline'].sum()}**")
+
+    ##### CIVIL AND STRUCTURAL #####
+    st.subheader("Civil and Structural")
+
+    if selected_civ:
+        df_concat_civ = pd.concat([df_civ_man,df_civ.loc[df_civ["Artefact"] == selected_civ]])
+        st.table(df_concat_civ)
+        st.markdown(f"Total Estimated Labour Hours: **{df_civ['Est Labour Hours'].sum()}**")
+        st.markdown(f"Total Timeline: **{df_civ['Timeline'].sum()}**")
+
+    ##### Budget Estimation of OSS Costs #####
+    st.subheader("Budget Estimation of OSS Costs")
+
+    if selected_ec:
+        df_concat_civ = pd.concat([df_ec_man,df_ec.loc[df_ec["Artefact"] == selected_ec]])
+        st.table(df_concat_ec)
+        st.markdown(f"Total Estimated Labour Hours: **{df_ec['Est Labour Hours'].sum()}**")
+        st.markdown(f"Total Timeline: **{df_ec['Timeline'].sum()}**")
+
+    ##### Prequalifications of OEMS, FEED Consultants and EPC contractors & Tender support #####
+    st.subheader("Prequalifications of OEMS, FEED Consultants and EPC(I) contractors & Tender support")
+
+    if selected_pec:
+        df_concat_civ = pd.concat([df_pec_man,df_pec.loc[df_pec["Artefact"] == selected_pec]])
+        st.table(df_concat_pec)
+        st.markdown(f"Total Estimated Labour Hours: **{df_pec['Est Labour Hours'].sum()}**")
+        st.markdown(f"Total Timeline: **{df_pec['Timeline'].sum()}**")
         
-    else: 
-        df_concat = pd.concat([df_pm_man,df_pm.loc[df_pm["Artefact"] == selected_pm]])
-        st.table(df_concat)
-        st.markdown(f"Total Estimated Labour Hours: **{df_concat['Est Labour Hours'].sum()}**")
-        st.markdown(f"Total Timeline: **{df_concat['Timeline'].sum()}**")
-
-    st.subheader("Project Management")
 
     
 
