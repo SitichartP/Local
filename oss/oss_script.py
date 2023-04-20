@@ -53,6 +53,8 @@ if uploaded_file is not None:
     ## TITLE ##
     st.title("Delivery Schedule")
 
+
+    ######################################## TABLES ######################################## 
     ##### PROJECT MANAGEMENT SECTION #####
     st.subheader("Project Management")
 
@@ -100,16 +102,6 @@ if uploaded_file is not None:
         
 
     
-
-## Electrical ## 
-
-# st.title("Electrical")
-# df_el = df.loc[(df["PM "] != "X") & (df["Electrical Team"] == "X") & (df["Civl Structural Team"] != "X")]
-# df_el.drop(["PM ","Civl Structural Team"],axis=1,inplace=True)
-# st.table(df_el)
-
-
-## If optional user can choose ## 
 
 
 
