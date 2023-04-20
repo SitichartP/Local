@@ -18,7 +18,6 @@ if uploaded_file is not None:
     # df = pd.read_excel("OSS Concept Design Delivery Guide.xlsx",index_col=False,sheet_name="Sheet1")
     df.drop(df.columns[[0,1]],axis=1,inplace=True)
 
-
     ######################################## DATAFRAMES FOR EACH SECTION ######################################## 
     df_pm = df.loc[(df["PM "] == "X") & (df["Electrical Team"] != "X") & (df["Civl Structural Team"] != "X")]
     df_pm.drop(["Civl Structural Team","Electrical Team"],axis = 1 , inplace=True)
@@ -45,20 +44,19 @@ if uploaded_file is not None:
     df_pec_op = df_pec.loc[df_pec["Classification"] == "Optional"]
 
 
-
     ######################################## SIDE BAR FILERS ######################################## 
 
     ## PM ##
     st.sidebar.header('PM Optional Tasks')
-    selected_pm = st.sidebar.selectbox('Select a optional task', ['Please Select'] + list(df_pm_op['Artefact'].unique()))
+    selected_pm = st.sidebar.multiselect('Select a optional task', ['Please Select'] + list(df_pm_op['Artefact'].unique()))
 
     ## Electrical ##
     st.sidebar.header('Electrical Optional Tasks')
-    selected_elec = st.sidebar.selectbox('Select a optional task', ['Please Select'] + list(df_elec_op['Artefact'].unique()))   
+    selected_elec = st.sidebar.multiselect('Select a optional task', ['Please Select'] + list(df_elec_op['Artefact'].unique()))   
 
     ## Civil ##
     st.sidebar.header('Civil and Structural Optional Tasks')
-    selected_civ = st.sidebar.selectbox('Select a optional task', ['Please Select'] + list(df_civ_op['Artefact'].unique()))   
+    selected_civ = st.sidebar.multiselect('Select a optional task', ['Please Select'] + list(df_civ_op['Artefact'].unique()))   
 
     ## Electrical and civil structural ##
     st.sidebar.header('Electrical and civil structural Tasks')
@@ -74,28 +72,38 @@ if uploaded_file is not None:
     st.subheader("Project Management")
 
     if selected_pm:
-        df_concat_pm = pd.concat([df_pm_man,df_pm.loc[df_pm["Artefact"] == selected_pm]])
+        df_concat_pm = pd.concat([df_pm_man,df_pm.loc[df_pm["Artefact"].isin(selected_pm)]])
         st.table(df_concat_pm)
         st.markdown(f"Total Estimated Labour Hours: **{df_concat_pm['Est Labour Hours'].sum()}**")
         st.markdown(f"Total Timeline: **{df_concat_pm['Timeline'].sum()}**")
+
+    else: 
+        st.table(df_pm_man)
+
 
     ##### ELECTRICAL SECTION #####
     st.subheader("Electrical")
 
     if selected_elec:
-        df_concat_elec = pd.concat([df_elec_man,df_elec.loc[df_elec["Artefact"] == selected_elec]])
+        df_concat_elec = pd.concat([df_elec_man,df_elec.loc[df_elec["Artefact"].isin(selected_elec)]])
         st.table(df_concat_elec)
         st.markdown(f"Total Estimated Labour Hours: **{df_concat_elec['Est Labour Hours'].sum()}**")
         st.markdown(f"Total Timeline: **{df_concat_elec['Timeline'].sum()}**")
+    
+    else:
+        df_elec_man
 
     ##### CIVIL AND STRUCTURAL #####
     st.subheader("Civil and Structural")
 
     if selected_civ:
-        df_concat_civ = pd.concat([df_civ_man,df_civ.loc[df_civ["Artefact"] == selected_civ]])
+        df_concat_civ = pd.concat([df_civ_man,df_civ.loc[df_civ["Artefact"].isin(selected_civ)]])
         st.table(df_concat_civ)
         st.markdown(f"Total Estimated Labour Hours: **{df_concat_civ['Est Labour Hours'].sum()}**")
         st.markdown(f"Total Timeline: **{df_civ['Timeline'].sum()}**")
+    
+    else: 
+        df_civ_man
 
     ##### Budget Estimation of OSS Costs #####
     st.subheader("Budget Estimation of OSS Costs")
@@ -105,6 +113,9 @@ if uploaded_file is not None:
         st.table(df_concat_ec)
         st.markdown(f"Total Estimated Labour Hours: **{df_concat_ec['Est Labour Hours'].sum()}**")
         st.markdown(f"Total Timeline: **{df_concat_ec['Timeline'].sum()}**")
+    
+    else:
+        df_ec_man
 
     ##### Prequalifications of OEMS, FEED Consultants and EPC contractors & Tender support #####
     st.subheader("Prequalifications of OEMS, FEED Consultants and EPC(I) contractors & Tender support")
@@ -114,6 +125,9 @@ if uploaded_file is not None:
         st.table(df_concat_pec)
         st.markdown(f"Total Estimated Labour Hours: **{df_concat_pec['Est Labour Hours'].sum()}**")
         st.markdown(f"Total Timeline: **{df_concat_pec['Timeline'].sum()}**")
+    
+    else:
+        df_pec_man
         
 
     
