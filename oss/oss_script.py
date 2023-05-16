@@ -63,7 +63,7 @@ if uploaded_file is not None:
     selected_civ = st.sidebar.multiselect('Select a optional task', list(df_civ_op['Artefact'].unique()))   
 
     ## Electrical and civil structural ##
-    st.sidebar.header('Electrical and civil structural Tasks')
+    st.sidebar.header('Electrical and Civil Structural Tasks')
     selected_ec = st.sidebar.multiselect('Select a optional task', list(df_ec_op['Artefact'].unique())) 
 
     # ## Prequalification of OEMs, FEED Consultants and EPC(I) contractors & Tender support (Electrical and civil structural) ## 
